@@ -7,7 +7,7 @@ const result = document.querySelector('.result');
 const ul = document.querySelector('ul');
 const allDeleteBtn = document.querySelector('.all-delete-btn');
 const newRecord = document.createElement('li');
-//..
+
 
 
 let gameRecord = [];
@@ -18,13 +18,22 @@ let computerScore = 0;
 const deleteResult = (deleteId) => {
 	gameRecord=gameRecord.filter(item=>item.id!==deleteId);
   updateRecord();
+
 }
 
 /*기록 전체 삭제*/
 const deleteAllResult = () => {
 
-  }
+  gameRecord=[];
+  ul.innerHTML='';
+  userScore=0;
+  computerScore=0;
+  updateScore();
 
+  
+  }
+  
+  
 
 /*점수 업데이트*/
 const updateScore = () => {
@@ -51,8 +60,11 @@ const updateRecord = () => {
     const deleteBtn = document.createElement('button');
     li.classList.add('custom-li'); 
     deleteBtn.classList.add('custom-delete-btn'); 
+  
+//..
 
-    //..
+    li.innerText=item.message;
+    
     deleteBtn.innerText = '삭제';
     
     deleteBtn.addEventListener('click', () => deleteResult(item.id));
@@ -63,19 +75,21 @@ const updateRecord = () => {
   console.log(gameRecord);
 }
 
+
 /*화면에 선택 사항(가위, 바위, 보) 및 결과 보여주기*/
 const showResult = (user, computer, resultMsg) => {
-	userChoice.textContent = `나: ${user}`;
-  computerChoice.textContent = `컴퓨터: ${computer}`;
+	userChoice.innerText = `나: ${user}`;
+  computerChoice.innerText = `컴퓨터: ${computer}`;
 
-  result.textContent = `결과: ${resultMsg}`;
+  result.innerText = `결과: ${resultMsg}`;
   updateScore();
+
 }
 
 /*배열 gameRecord에 결과 추가*/
 const addResult = (msg) => {
   gameRecord = gameRecord.concat({ id: Date.now(), message: msg });
-
+  
   updateRecord();
 }
 
@@ -115,8 +129,6 @@ const play = (user, computer) => {
   addResult(recordMsg);
   showResult(user, computer, message);
 
-  addRecordToBox(user, computer, message);
-
 }
 
 const start = (e) => {
@@ -130,4 +142,4 @@ const start = (e) => {
 rockBtn.addEventListener('click',start);
 scissorsBtn.addEventListener('click',start);
 paperBtn.addEventListener('click',start);
-//..
+allDeleteBtn.addEventListener('click', deleteAllResult);
